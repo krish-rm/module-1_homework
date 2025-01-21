@@ -15,15 +15,14 @@ root@2e7bb3d40ae4:/# pip --version
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 
+ANSWER: **pip 24.3.1**
+
 ### Question 2. Understanding Docker networking and docker-compose
 
 The hostname for the PostgreSQL service will be the name of the service, which is defined as db.
 Inside the container, the PostgreSQL service will be running on the default PostgreSQL port 5432.
 
-```
-Hostname: db
-Port: 5432
-```
+ANSWER: **db:5432**
 
 ### Question 3. Trip Segmentation Count
 
@@ -63,3 +62,26 @@ LIMIT 1;
 ```
 
 ANSWER: **2019-10-31         515.89**
+
+
+### Question 5. Three biggest pickup zones
+Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
+Consider only lpep_pickup_datetime when filtering by date.
+
+
+ANSWER: **East Harlem North, East Harlem South, Morningside Heights**
+
+### Question 6. Largest tip
+For the passengers picked up in October 2019 in the zone named "East Harlem North" which was the drop off zone that had the largest tip?
+Note: it's tip , not trip
+We need the name of the zone, not the ID.
+
+ANSWER: 
+
+### Question 7. Terraform Workflow
+Which of the following sequences, respectively, describes the workflow for:
+Downloading the provider plugins and setting up backend,
+Generating proposed changes and auto-executing the plan
+Remove all resources managed by terraform`
+
+ANSWER: **terraform init, terraform apply -auto-approve, terraform destroy**

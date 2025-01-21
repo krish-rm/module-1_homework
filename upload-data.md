@@ -99,8 +99,17 @@ CSV HEADER;
 
 ```Python
 import pandas as pd
-green_df = pd.read_csv("green_tripdata_2019-10.csv", nrows=1000)
-green_df.lpep_pickup_datetime = pd.to_datetime(green_df.lpep_pickup_datetime)
-green_df.lpep_dropoff_datetime = pd.to_datetime(green_df.lpep_dropoff_datetime)
-print(pd.io.sql.get_schema(green_df, name='green_taxi_trips'))
+df = pd.read_csv("green_tripdata_2019-10.csv", nrows=1000)
+df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
+print(pd.io.sql.get_schema(df, name='green_taxi_trips'))
+```
+
+### How to use Jupyter or python to upload data to postgres container
+
+```Python
+from sqlalchemy import create_engine
+engine = create_engine('postgresql://root:root@localhost:5432/ny_taxi')
+engine.connect()
+print(pd.io.sql.get_schema(df, name='green_taxi_trips', con=engine))
 ```

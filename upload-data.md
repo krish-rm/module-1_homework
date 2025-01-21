@@ -4,7 +4,7 @@
 docker ps
 ```
 
-Go to local dirctory of Docker-compose and Csv Files
+Go to local directory of Docker-compose and Csv Files
 
 ```bash
 docker-compose up -d
@@ -120,11 +120,10 @@ df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
 print(pd.io.sql.get_schema(df, name='green_taxi_trips'))
 ```
 
-### How to use Jupyter or python to upload data to postgres container
+### How to use Jupyter or python to connect to postgres container
 
 ```Python
 from sqlalchemy import create_engine
 engine = create_engine('postgresql://root:root@localhost:5432/ny_taxi')
 engine.connect()
-print(pd.io.sql.get_schema(df, name='green_taxi_trips', con=engine))
 ```

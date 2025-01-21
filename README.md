@@ -17,6 +17,7 @@ pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 
 ANSWER: **pip 24.3.1**
 
+
 ### Question 2. Understanding Docker networking and docker-compose
 
 The hostname for the PostgreSQL service will be the name of the service, which is defined as db.
@@ -48,6 +49,7 @@ WHERE lpep_pickup_datetime >= '2019-10-01'
 
 ANSWER: **104,838; 199,013; 109,645; 27,688; 35,202**
 
+
 ### Question 4. Longest trip for each day
 
 Which was the pick up day with the longest trip distance? Use the pick up time for your calculations.
@@ -68,15 +70,39 @@ ANSWER: **2019-10-31         515.89**
 Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
 Consider only lpep_pickup_datetime when filtering by date.
 
+```sql
+SELECT tz."Zone", tz."Borough", SUM(gtt.total_amount) AS total_amount
+FROM green_taxi_trips gtt
+JOIN taxi_zones tz ON gtt."PULocationID" = tz."LocationID"
+WHERE DATE(gtt.lpep_pickup_datetime) = '2019-10-18'
+GROUP BY tz."Zone", tz."Borough"
+HAVING SUM(gtt.total_amount) > 13000
+ORDER BY total_amount DESC
+LIMIT 3;
+```
 
 ANSWER: **East Harlem North, East Harlem South, Morningside Heights**
+
 
 ### Question 6. Largest tip
 For the passengers picked up in October 2019 in the zone named "East Harlem North" which was the drop off zone that had the largest tip?
 Note: it's tip , not trip
 We need the name of the zone, not the ID.
 
-ANSWER: 
+```sql
+SELECT tz."Zone" AS dropoff_zone, MAX(gtt.tip_amount) AS max_tip
+FROM green_taxi_trips gtt
+JOIN taxi_zones tz ON gtt."DOLocationID" = tz."LocationID"
+JOIN taxi_zones pickup_zone ON gtt."PULocationID" = pickup_zone."LocationID"
+WHERE pickup_zone."Zone" = 'East Harlem North'
+AND DATE(gtt.lpep_pickup_datetime) BETWEEN '2019-10-01' AND '2019-10-31'
+GROUP BY tz."Zone"
+ORDER BY max_tip DESC
+LIMIT 1;
+```
+
+ANSWER: **JFK Airport 87.3**
+
 
 ### Question 7. Terraform Workflow
 Which of the following sequences, respectively, describes the workflow for:

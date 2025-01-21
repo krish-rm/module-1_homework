@@ -42,6 +42,13 @@ CREATE TABLE "green_taxi_trips" (
   "trip_type" INTEGER,
   "congestion_surcharge" REAL
 );
+
+CREATE TABLE "taxi_zones" (
+  "LocationID" INTEGER PRIMARY KEY,
+  "Borough" TEXT,
+  "Zone" TEXT,
+  "service_zone" TEXT
+);
 ```
 
 3. Check if tables are created
@@ -50,12 +57,14 @@ CREATE TABLE "green_taxi_trips" (
 \dt
 
 \d green_taxi_trips
+\d taxi_zones
 ```
 
 4. Once tables are created, then time to copy csv data to postgres DB. For this first copy csv data to /tmp in postgres container
 
 ```bash
 docker cp C:\Users\lenovo\PRACTICALS\Homework\module-1_homework\green_tripdata_2019-10.csv postgres:/tmp/green_tripdata_2019-10.csv
+docker cp C:\Users\lenovo\PRACTICALS\Homework\module-1_homework\taxi_zone_lookup.csv postgres:/tmp/taxi_zone_lookup.csv
 ```
 
 5. Connect to psql again and copy csv data from /tmp to postgres DB
@@ -91,8 +100,14 @@ FROM '/tmp/green_tripdata_2019-10.csv'
 DELIMITER ',' 
 CSV HEADER;
 ```
+```sql
+COPY "taxi_zones"("LocationID", "Borough", "Zone", "service_zone")
+FROM '/tmp/taxi_zone_lookup.csv'
+DELIMITER ','
+CSV HEADER;
+```
 
-6. Check the data upload on pgadmin ny_taxi DB. There should be green_taxi_trips with data succefully uploaded.
+6. Check the data upload on pgadmin ny_taxi DB. There should be green_taxi_trips and taxi_zones with data succefully uploaded.
 
 
 ### How to get schema to create Tables using pandas.
